@@ -1,13 +1,13 @@
 import { Request } from "express";
 
-export async function handler({ query }: Request) {
+export default async function greetingByName({ query }: Request) {
     if (query.name) {
         return {
             code: 200,
             data: {
                 success: true,
                 data: {  
-                    greeting: `Howdy, ${query.name}`
+                    greeting: `xd Hiiiiii, ${query.name}`
                 }
             }
         };

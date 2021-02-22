@@ -10,11 +10,11 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
-    "outDir": "./dist",
+    "outDir": "dist",
     "lib": [
       "esnext",
       "scripthost"
-    ],
+    ]
   },
   "include": [
     "api"

@@ -11,14 +11,18 @@ app.use(cors());
 // Loop through routes:
 const { readdirSync } = require("fs");
 readdirSync(require("path").join(__dirname, "../dist")).forEach(file => {
-    const { handler } = require(`../dist/${file}`);
+    const handler = require(`../dist/${file}`);
+
+    if (!handler || !handler.default) return;
 
     const [_ext, method, ...pathFragments] = file.split(".").reverse();
 
     const path = pathFragments.reverse().join("/");
 
+    console.log(`Discovered ${method.toUpperCase()} method at /${path}`);
+
     app[method](`/${path}`, async (req, res) => {
-        handler(req).then(({ code, data }) => res.status(code).json(data));
+        Promise.resolve(handler.default(req)).then(({ code, data }) => res.status(code).json(data));
     });
 });
    
