@@ -4,6 +4,10 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 
+// Accept JSON:
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
+
 // Enable CORS:
 const cors = require("cors");
 app.use(cors());
@@ -17,9 +21,13 @@ readdirSync(require("path").join(__dirname, "../dist")).forEach(file => {
 
     const [_ext, method, ...pathFragments] = file.split(".").reverse();
 
-    const path = pathFragments.reverse().join("/");
+    let path = pathFragments.reverse().join("/");
 
     console.log(`Discovered ${method.toUpperCase()} method at /${path}`);
+
+    if (path === "index") {
+        path = "/";
+    }
 
     app[method](`/${path}`, async (req, res) => {
         Promise.resolve(handler.default(req)).then(({ code, data }) => res.status(code).json(data));
@@ -27,5 +35,5 @@ readdirSync(require("path").join(__dirname, "../dist")).forEach(file => {
 });
    
 // Start server
-const port = process.env.PORT || 6969;
+const port = process.env.PORT || 8888;
 app.listen(port, () => console.log(`Listening on port ${port}`));
