@@ -52,3 +52,20 @@ All `.ts` files that are direct children of the `/api` folder are converted to r
 
 - `npm run start`: Starts the production using the output from `npm run build`.
 - `npm run dev`: Starts a dev server that restarts on file change.
+
+## Custom Config File:
+
+In many cases, you might want to have direct control over the `Express` object (middleware for example).
+This file is completely optional. Also, it's already included in this template, but feel free to delete it if you don't need to.
+For this, create a `serviette.config.ts` file in the project root. This file looks like this:
+
+```ts
+import { Express } from "express";
+
+export function config(app: Express) {
+    /* Modify the app */
+}
+```
+
+The `app` parameter is a direct reference to the `Express` app, 
+which means you can call any function, such as `app.use`, `app,get`, `app.put`, etc.
